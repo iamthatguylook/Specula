@@ -1,0 +1,14 @@
+<h1>
+    Login Professor HTML Page
+</h1>
+
+<form method="GET">
+    Username :- <input type="username" name = "username"> <br>
+    Passoword :- <input type ="password" name= "password"> <br>
+    <input type = "submit" name="submit" >
+</form>
+{% for professor in Professors %}
+<p>
+{{professor.name}}
+</p>
+{% endfor %}
