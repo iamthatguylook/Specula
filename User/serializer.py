@@ -1,20 +1,19 @@
   
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from User.models import Professor
-
+from User.models import User
 
 from rest_framework import serializers
 
-from User.models import Professor
+from User.models import User
 
 
-class CustomProfessorSerializer(serializers.ModelSerializer):
+class CustomUserSerializer(serializers.ModelSerializer):
 
 	password2 				= serializers.CharField(style={'input_type': 'password'}, write_only=True)
 
 	class Meta:
-		model = Professor
+		model = User
 		fields = ['email', 'username', 'password', 'password2']
 		extra_kwargs = {
 				'password': {'write_only': True},
@@ -23,7 +22,7 @@ class CustomProfessorSerializer(serializers.ModelSerializer):
 
 	def	save(self):
 
-		account = Professor(
+		account = User(
 					email=self.validated_data['email'],
 					username=self.validated_data['username']
 				)

@@ -1,5 +1,5 @@
 
-from User.serializer import CustomProfessorSerializer
+from User.serializer import CustomUserSerializer
 from rest_framework.authtoken.models import Token
 
 # Register
@@ -19,7 +19,7 @@ from rest_framework.authtoken.models import Token
 def registration_view(request):
 
 	if request.method == 'POST':
-		serializer = CustomProfessorSerializer(data=request.data)
+		serializer = CustomUserSerializer(data=request.data)
 		data = {}
 		if serializer.is_valid():
 			account = serializer.save()

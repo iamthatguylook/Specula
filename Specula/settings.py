@@ -34,7 +34,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-AUTH_USER_MODEL = "User.Professor"
+AUTH_USER_MODEL = "User.User"
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -48,8 +48,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'User',
     'rest_framework.authtoken',
-    'Chat_Room',
-    'channels'
+    'Chat_Room'
+    
    
 ]
 

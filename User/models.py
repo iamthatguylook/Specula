@@ -7,7 +7,7 @@ from rest_framework.authtoken.models import Token
 from django.conf import settings
 # Create your models here.
 
-class ProfessorAccountManager(BaseUserManager):
+class UserAccountManager(BaseUserManager):
     def create_user(self,email,username,password=None):
         if not email:
             raise ValueError("Users must have an email address")
@@ -37,7 +37,7 @@ def get_profile_image_filepath(self,filename):
     return f'profile_images/{self.pk}/{"profile_image.png"}'
 def get_default_profile_image():
     return "DefaultProfile/LOGO.png"
-class Professor(AbstractBaseUser):
+class User(AbstractBaseUser):
     email           = models.EmailField(verbose_name="email",max_length=60, unique=True)
     username        = models.CharField(max_length=30, unique=True)
     date_joined     = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
@@ -49,7 +49,7 @@ class Professor(AbstractBaseUser):
     profile_image   = models.ImageField(max_length=255,upload_to=get_profile_image_filepath,null=True,blank=True,default=get_default_profile_image)
     hide_email      = models.BooleanField(default=True)
 
-    objects = ProfessorAccountManager()
+    objects = UserAccountManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS=['username']
 
