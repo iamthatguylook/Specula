@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'User',
     'rest_framework.authtoken',
-    'Chat_Room'
+    'Chat_Room',
+    'channels'
     
    
 ]
