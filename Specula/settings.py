@@ -184,4 +184,10 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
-ASGI_APPLICATION = 'Specula.routing.application'
+ASGI_APPLICATION = "Specula.routing.application"
+
+CHANNEL_LAYERS = {
+    "default":{
+        "BACKEND" : "channels.layers.InMemoryChannelLayer"
+    }
+}
