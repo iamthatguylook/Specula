@@ -10,6 +10,8 @@
       #  await self.send(text_data=json.dumps({
       #      'tester':tester,
       #  }))
+
+# test for faisal
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 
