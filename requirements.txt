@@ -1,5 +1,5 @@
 # These are essential packages required to run the django application.
-# advisible to add the packages in virtual enviornment
+# advisible to add the packages in virtual enviornment.
 asgiref==3.4.1
 Django==3.2.6
 djangorestframework==3.12.4
