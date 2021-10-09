@@ -188,6 +188,6 @@ ASGI_APPLICATION = "Specula.routing.application"
 
 CHANNEL_LAYERS = {
     "default":{
-        "BACKEND" : "channels.layers.InMemoryChannelLayer"
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
     }
 }
