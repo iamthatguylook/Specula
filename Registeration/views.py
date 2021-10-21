@@ -7,18 +7,18 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import RegistrationStudentSerializer
-from rest_framework.decorators import api_view
-# Create your views here.
-def registerationProfessor(request):
-    Professors = Professor.objects.all()
-    return render(request,'registerationProfessor.html',{'Professors':Professors})
 
-def registerationStudent(request):
-    return render(request,'registerationStudent.html')
+from rest_framework.decorators import api_view
+
+
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
+# Create your views here.
 
 
 class StudentList(APIView):
+    permission_classes = [IsAuthenticated]
     #List all Students when API requests are sent to API
     def get(self, request, format=None):
         students = Student.objects.all()
@@ -33,6 +33,7 @@ class StudentList(APIView):
         return Response(serializerForUploadingStudent.errors,status=status.HTTP_400_BAD_REQUEST)
 
 class StudentDetail(APIView):
+    permission_classes = [IsAuthenticated]
     """
     Retrieve, update or delete a Student instance.
     """
@@ -105,16 +106,3 @@ class ProfessorDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-@api_view(['POST',])    
-def StudentRegisteration_View(request):
-        serializerForUploadingStudent = RegistrationStudentSerializer(data=request.data)
-        data = {}
-        if serializerForUploadingStudent.is_valid():
-            students = serializerForUploadingStudent.save()
-            data['response'] = "successfully registered"
-            data['studentID'] = students.studentID
-            data['name'] = students.name
-            data['phoneNumber'] = students.phoneNumber
-        else:
-            data = serializerForUploadingStudent.errors  
-        return Response(data)
