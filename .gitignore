@@ -1,1 +1,3 @@
 *.pyc
+Specula/__pycache__/settings.cpython-39.pyc
+Chat_Room/__pycache__/consumers.cpython-39.pyc
