@@ -21,7 +21,7 @@ class StudentList(APIView):
     #permission_classes = [IsAdminUser]
     #List all Students when API requests are sent to API
     def get(self, request, format=None):
-        students = Student.objects.all()
+        students = Student.objects.filter(CurrentExam="CSCI321")
         serializerForStudent = StudentSerializer(students,many=True)
         return Response(serializerForStudent.data)
     
@@ -48,13 +48,13 @@ class TimeLineList(APIView):
         return Response(serializerForUploadingTimeLine.errors,status=status.HTTP_400_BAD_REQUEST)
 
 class StudentDetail(APIView):
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
     """
     Retrieve, update or delete a Student instance.
     """
     def get_object(self, pk):
         try:
-            return Student.objects.get(pk=pk)
+            return Student.objects.get(CurrentExam=pk)
         except Student.DoesNotExist:
             raise Http404
 

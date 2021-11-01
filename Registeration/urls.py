@@ -6,7 +6,7 @@ urlpatterns = [
     # API restframework  VIEWS
     path('api/registerationStudent/ListAllStudents/',
          views.StudentList.as_view(), name='registerationStudent/ListALLStudents/'),
-    path('api/registerationStudent/<int:pk>/',
+    path('api/registerationStudent/<str:pk>/',
          views.StudentDetail.as_view(), name='registerationStudent/int<pk>/'),
     path('api/registerationProfessor/ListAllProfessors/',
          views.ProfessorList.as_view(), name='registerationProfessor/ListALLProfessors/'),
