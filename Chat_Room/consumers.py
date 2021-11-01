@@ -1,15 +1,15 @@
 # await self.channel_layer.group_send(
-       #     self.room_group_name,
-        #    {
-       #         'type':'tester_message',
-       #         'tester':'Hello world',
-        #    }
-        #)
-    #async def tester_message(self,event):
-      #  tester = event['tester']
-      #  await self.send(text_data=json.dumps({
-      #      'tester':tester,
-      #  }))
+#     self.room_group_name,
+#    {
+#         'type':'tester_message',
+#         'tester':'Hello world',
+#    }
+# )
+# async def tester_message(self,event):
+#  tester = event['tester']
+#  await self.send(text_data=json.dumps({
+#      'tester':tester,
+#  }))
 
 # test for faisal
 import json
@@ -17,6 +17,7 @@ import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 import User.models
 from User.models import User
+
 
 class ChatRoomConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -31,16 +32,11 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
         await self.accept()
 
     async def disconnect(self, close_code):
-      
 
-        
         await self.channel_layer.group_discard(
             self.room_group_name,
             self.channel_name
         )
-
-    
- 
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
@@ -66,4 +62,3 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
         }))
 
     pass
-

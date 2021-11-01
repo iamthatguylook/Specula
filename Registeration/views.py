@@ -10,15 +10,15 @@ from rest_framework import status
 
 from rest_framework.decorators import api_view
 
-
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 
 # Create your views here.
 
 
 class StudentList(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminUser]
     #List all Students when API requests are sent to API
     def get(self, request, format=None):
         students = Student.objects.all()
