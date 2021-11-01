@@ -1,12 +1,16 @@
 from rest_framework import serializers
-from .models import Student
+from .models import Student, TimeLine
 from .models import Professor
 
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ['name','studentID','phoneNumber','degree']
+        fields = ['name','studentID','CurrentExam','CurrentAItimeStamp','CurrentAItextMessage','CurrentAIdangerLevel']
 
+class TimeLineSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TimeLine
+        fields = ['student','AItimeStamp','AItextMessage','AIdangerLevel']
 
 
 class ProfessorSerializer(serializers.ModelSerializer):

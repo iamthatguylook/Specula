@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Professor
-from .models import Student
-from .serializers import StudentSerializer
+from .models import Student,TimeLine
+from .serializers import StudentSerializer,TimeLineSerializer
 from .serializers import ProfessorSerializer
 from django.http import Http404
 from rest_framework.views import APIView
@@ -18,7 +18,7 @@ from rest_framework.response import Response
 
 
 class StudentList(APIView):
-    permission_classes = [IsAdminUser]
+    #permission_classes = [IsAdminUser]
     #List all Students when API requests are sent to API
     def get(self, request, format=None):
         students = Student.objects.all()
@@ -31,6 +31,21 @@ class StudentList(APIView):
             serializerForUploadingStudent.save()
             return Response(serializerForUploadingStudent.data,status=status.HTTP_201_CREATED)
         return Response(serializerForUploadingStudent.errors,status=status.HTTP_400_BAD_REQUEST)
+
+class TimeLineList(APIView):
+    #permission_classes = [IsAdminUser]
+    #List all Students when API requests are sent to API
+    def get(self, request, format=None):
+        timelines = TimeLine.objects.all()
+        serializerForTimeLine = TimeLineSerializer(timelines,many=True)
+        return Response(serializerForTimeLine.data)
+    
+    def post(self,request,format=None):
+        serializerForUploadingTimeLine = TimeLineSerializer(data=request.data)
+        if serializerForUploadingTimeLine.is_valid():
+            serializerForUploadingTimeLine.save()
+            return Response(serializerForUploadingTimeLine.data,status=status.HTTP_201_CREATED)
+        return Response(serializerForUploadingTimeLine.errors,status=status.HTTP_400_BAD_REQUEST)
 
 class StudentDetail(APIView):
     permission_classes = [IsAuthenticated]
