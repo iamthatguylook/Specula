@@ -10,7 +10,7 @@ class StudentSerializer(serializers.ModelSerializer):
 class TimeLineSerializer(serializers.ModelSerializer):
     class Meta:
         model = TimeLine
-        fields = ['student','AItimeStamp','AItextMessage','AIdangerLevel']
+        fields = ['student','AItimeStamp','AItextMessage','AIdangerLevel','CurrentExam']
 
 
 class ProfessorSerializer(serializers.ModelSerializer):

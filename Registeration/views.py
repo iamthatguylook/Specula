@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Professor
-from .models import Student,TimeLine
-from .serializers import StudentSerializer,TimeLineSerializer
+from .models import Student, TimeLine
+from .serializers import StudentSerializer, TimeLineSerializer
 from .serializers import ProfessorSerializer
 from django.http import Http404
 from rest_framework.views import APIView
@@ -19,39 +19,51 @@ from rest_framework.response import Response
 
 class StudentList(APIView):
     #permission_classes = [IsAdminUser]
-    #List all Students when API requests are sent to API
+    # List all Students when API requests are sent to API
     def get(self, request, format=None):
         students = Student.objects.filter(CurrentExam="CSCI321")
-        serializerForStudent = StudentSerializer(students,many=True)
+        serializerForStudent = StudentSerializer(students, many=True)
         return Response(serializerForStudent.data)
-    
-    def post(self,request,format=None):
+
+    def post(self, request, format=None):
         serializerForUploadingStudent = StudentSerializer(data=request.data)
         if serializerForUploadingStudent.is_valid():
             serializerForUploadingStudent.save()
-            return Response(serializerForUploadingStudent.data,status=status.HTTP_201_CREATED)
-        return Response(serializerForUploadingStudent.errors,status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializerForUploadingStudent.data, status=status.HTTP_201_CREATED)
+        return Response(serializerForUploadingStudent.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class TimeLineList(APIView):
     #permission_classes = [IsAdminUser]
-    #List all Students when API requests are sent to API
+    # List all Students when API requests are sent to API
     def get(self, request, format=None):
         timelines = TimeLine.objects.all()
-        serializerForTimeLine = TimeLineSerializer(timelines,many=True)
+        serializerForTimeLine = TimeLineSerializer(timelines, many=True)
         return Response(serializerForTimeLine.data)
-    
-    def post(self,request,format=None):
+
+    def post(self, request, format=None):
         serializerForUploadingTimeLine = TimeLineSerializer(data=request.data)
         if serializerForUploadingTimeLine.is_valid():
             serializerForUploadingTimeLine.save()
-            return Response(serializerForUploadingTimeLine.data,status=status.HTTP_201_CREATED)
-        return Response(serializerForUploadingTimeLine.errors,status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializerForUploadingTimeLine.data, status=status.HTTP_201_CREATED)
+        return Response(serializerForUploadingTimeLine.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class TimeLineListBasedOnStudent(APIView):
+    #permission_classes = [IsAdminUser]
+    # List all Students when API requests are sent to API
+    def get(self, request, id, currentexam, format=None):
+        timelines = TimeLine.objects.filter(CurrentExam=currentexam, student=id)
+        serializerForTimeLine = TimeLineSerializer(timelines, many=True)
+        return Response(serializerForTimeLine.data)
+
+  
 class StudentDetail(APIView):
     #permission_classes = [IsAuthenticated]
     """
     Retrieve, update or delete a Student instance.
     """
+
     def get_object(self, pk):
         try:
             return Student.objects.get(CurrentExam=pk)
@@ -77,25 +89,27 @@ class StudentDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-
 class ProfessorList(APIView):
-    #List all Students when API requests are sent to API
+    # List all Students when API requests are sent to API
     def get(self, request, format=None):
         professors = Professor.objects.all()
-        serializerForProfessor = ProfessorSerializer(professors,many=True)
+        serializerForProfessor = ProfessorSerializer(professors, many=True)
         return Response(serializerForProfessor.data)
-    
-    def post(self,request,format=None):
-        serializerForUploadingProfessor = ProfessorSerializer(data=request.data)
+
+    def post(self, request, format=None):
+        serializerForUploadingProfessor = ProfessorSerializer(
+            data=request.data)
         if serializerForUploadingProfessor.is_valid():
             serializerForUploadingProfessor.save()
-            return Response(serializerForUploadingProfessor.data,status=status.HTTP_201_CREATED)
-        return Response(serializerForUploadingProfessor.errors,status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializerForUploadingProfessor.data, status=status.HTTP_201_CREATED)
+        return Response(serializerForUploadingProfessor.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class ProfessorDetail(APIView):
     """
     Retrieve, update or delete a Professor instance.
     """
+
     def get_object(self, pk):
         try:
             return Professor.objects.get(pk=pk)
@@ -108,7 +122,7 @@ class ProfessorDetail(APIView):
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
-        professor= self.get_object(pk)
+        professor = self.get_object(pk)
         serializer = ProfessorSerializer(professor, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -119,5 +133,3 @@ class ProfessorDetail(APIView):
         professor = self.get_object(pk)
         professor.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-

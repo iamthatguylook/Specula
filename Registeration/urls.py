@@ -12,5 +12,9 @@ urlpatterns = [
          views.ProfessorList.as_view(), name='registerationProfessor/ListALLProfessors/'),
     path('api/registerationProfessor/<int:pk>/',
          views.ProfessorDetail.as_view(), name='registerationProfessor/int<pk>/'),
-    path('api/ListTimeLine/', views.TimeLineList.as_view(), name='api/ListTimeLine/')
+    path('api/TimeLine/',
+         views.TimeLineList.as_view(), name='api/ListTimeLine/'),
+
+    path('api/TimeLine/<str:currentexam>/<str:id>/',
+         views.TimeLineListBasedOnStudent.as_view(), name='api/ListTimeLine/certain')
 ]

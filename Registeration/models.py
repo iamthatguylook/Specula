@@ -5,8 +5,6 @@ from django.contrib.auth.models import AbstractUser
 class Student(models.Model):
     name = models.CharField(max_length=100,null=True)
     studentID = models.CharField(max_length=500,primary_key=True,unique=True)
-    phoneNumber = models.CharField(max_length=500,null=True)
-    degree = models.CharField(max_length=500,null=True)
     CurrentExam = models.CharField(max_length=10,null=True)
     CurrentAItimeStamp= models.CharField(max_length=6,null=True)
     CurrentAItextMessage = models.CharField(max_length=500,null=True)
@@ -21,7 +19,7 @@ class TimeLine(models.Model):
     AItimeStamp= models.CharField(max_length=6)
     AItextMessage = models.CharField(max_length=500)
     AIdangerLevel = models.CharField(max_length=500)
-    
+    CurrentExam = models.CharField(max_length=10,null=True)
     def __str__(self):
         return self.student
 
