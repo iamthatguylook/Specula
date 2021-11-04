@@ -5,26 +5,41 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 from django.conf import settings
+from Registeration.models import Student
 # Create your models here.
 
 class UserAccountManager(BaseUserManager):
-    def create_user(self,email,username,password=None):
+    def create_user(self,email,username,name,password=None):
         if not email:
             raise ValueError("Users must have an email address")
         if not username:
             raise ValueError("User must have username")
+        if not name:
+            raise ValueError("User must enter name")
         user = self.model(
             email=self.normalize_email(email),
             username=username,
+            name = name
         )
+        student = Student(
+            studentID=username,
+            name = name
+        )
+        student.save()
         user.set_password(password)
         user.save(using=self._db)
         return user
-    def create_superuser(self,email,username,password=None):
-        user = self.create_user(
+    def create_superuser(self,email,username,name,password=None):
+        if not email:
+            raise ValueError("Users must have an email address")
+        if not username:
+            raise ValueError("User must have username")
+        if not name:
+            raise ValueError("User must enter name")
+        user = self.model(
             email=self.normalize_email(email),
             username=username,
-            
+            name = name
         )
         user.set_password(password)
         user.is_admin        = True
@@ -48,10 +63,10 @@ class User(AbstractBaseUser):
     is_superuser    = models.BooleanField(default=False)
     profile_image   = models.ImageField(max_length=255,upload_to=get_profile_image_filepath,null=True,blank=True,default=get_default_profile_image)
     hide_email      = models.BooleanField(default=True)
-
+    name            = models.CharField(max_length=30, null=True)
     objects = UserAccountManager()
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS=['username']
+    REQUIRED_FIELDS=['username','name']
 
     def __str__(self):
         return self.username

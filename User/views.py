@@ -1,4 +1,5 @@
 
+from Registeration.models import Student
 from User.serializer import CustomUserSerializer
 from rest_framework.authtoken.models import Token
 
@@ -10,7 +11,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-
+from Registeration.serializers import StudentSerializer
 
 from rest_framework.authtoken.models import Token
 
@@ -19,10 +20,14 @@ from rest_framework.authtoken.models import Token
 def registration_view(request):
 
 	if request.method == 'POST':
+		
 		serializer = CustomUserSerializer(data=request.data)
 		data = {}
 		if serializer.is_valid():
 			account = serializer.save()
+			student = Student(name = account.name,studentID = account.username)
+			student.save()
+			data['name'] = account.name
 			data['response'] = 'successfully registered new user.'
 			data['email'] = account.email
 			data['username'] = account.username

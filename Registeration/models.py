@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
 # Create your models here.
 class Student(models.Model):
     name = models.CharField(max_length=100,null=True)
@@ -9,6 +10,7 @@ class Student(models.Model):
     CurrentAItimeStamp= models.CharField(max_length=6,null=True)
     CurrentAItextMessage = models.CharField(max_length=500,null=True)
     CurrentAIdangerLevel = models.CharField(max_length=500,null=True)
+    
     #time stamp
     #message text
     #danger level

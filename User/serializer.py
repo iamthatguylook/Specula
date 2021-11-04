@@ -6,7 +6,7 @@ from User.models import User
 from rest_framework import serializers
 
 from User.models import User
-
+from Registeration.models import Student
 
 class CustomUserSerializer(serializers.ModelSerializer):
 
@@ -14,7 +14,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = User
-		fields = ['email', 'username', 'password', 'password2']
+		fields = ['email', 'username', 'password', 'password2','name']
 		extra_kwargs = {
 				'password': {'write_only': True},
 		}	
@@ -24,12 +24,19 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 		account = User(
 					email=self.validated_data['email'],
-					username=self.validated_data['username']
+					username=self.validated_data['username'],
+					name = self.validated_data['name']
 				)
+		student = Student(
+			studentID = self.validated_data['username'],
+			name = self.validated_data['name']
+		)
 		password = self.validated_data['password']
 		password2 = self.validated_data['password2']
 		if password != password2:
 			raise serializers.ValidationError({'password': 'Passwords must match.'})
 		account.set_password(password)
 		account.save()
+		student.save()
+
 		return account
