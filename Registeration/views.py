@@ -21,7 +21,7 @@ class StudentList(APIView):
     #permission_classes = [IsAdminUser]
     # List all Students when API requests are sent to API
     def get(self, request, format=None):
-        students = Student.objects.filter(CurrentExam="CSCI321")
+        students = Student.objects.all()
         serializerForStudent = StudentSerializer(students, many=True)
         return Response(serializerForStudent.data)
 
@@ -56,7 +56,13 @@ class TimeLineListBasedOnStudent(APIView):
         timelines = TimeLine.objects.filter(CurrentExam=currentexam, student=id)
         serializerForTimeLine = TimeLineSerializer(timelines, many=True)
         return Response(serializerForTimeLine.data)
-
+class TimeLineListBasedOnCurrentexam(APIView):
+    #permission_classes = [IsAdminUser]
+    # List all Students when API requests are sent to API
+    def get(self, request, currentexam, format=None):
+        timelines = TimeLine.objects.filter(CurrentExam=currentexam)
+        serializerForTimeLine = TimeLineSerializer(timelines, many=True)
+        return Response(serializerForTimeLine.data)
   
 class StudentDetail(APIView):
     #permission_classes = [IsAuthenticated]

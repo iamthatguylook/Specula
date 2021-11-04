@@ -16,5 +16,8 @@ urlpatterns = [
          views.TimeLineList.as_view(), name='api/ListTimeLine/'),
 
     path('api/TimeLine/<str:currentexam>/<str:id>/',
-         views.TimeLineListBasedOnStudent.as_view(), name='api/ListTimeLine/certain')
+         views.TimeLineListBasedOnStudent.as_view(), name='api/ListTimeLine/certain'),
+    path('api/TimeLine/<str:currentexam>/',
+         views.TimeLineListBasedOnCurrentexam.as_view(), name='api/ListTimeLine/exam')
+
 ]
