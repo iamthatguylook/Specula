@@ -79,41 +79,6 @@ class StudentList(APIView):
         return Response(serializerForUploadingStudent.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class TimeLineList(APIView):
-    #permission_classes = [IsAdminUser]
-    # List all Students when API requests are sent to API
-    def get(self, request, format=None):
-        timelines = TimeLine.objects.all()
-        serializerForTimeLine = TimeLineSerializer(timelines, many=True)
-        return Response(serializerForTimeLine.data)
-
-    def post(self, request, format=None):
-        serializerForUploadingTimeLine = TimeLineSerializer(data=request.data)
-        if serializerForUploadingTimeLine.is_valid():
-            serializerForUploadingTimeLine.save()
-            return Response(serializerForUploadingTimeLine.data, status=status.HTTP_201_CREATED)
-        return Response(serializerForUploadingTimeLine.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class TimeLineListBasedOnStudent(APIView):
-    #permission_classes = [IsAdminUser]
-    # List all Students when API requests are sent to API
-    def get(self, request, id, currentexam, format=None):
-        timelines = TimeLine.objects.filter(
-            CurrentExam=currentexam, student=id)
-        serializerForTimeLine = TimeLineSerializer(timelines, many=True)
-        return Response(serializerForTimeLine.data)
-
-
-class TimeLineListBasedOnCurrentexam(APIView):
-    #permission_classes = [IsAdminUser]
-    # List all Students when API requests are sent to API
-    def get(self, request, currentexam, format=None):
-        timelines = TimeLine.objects.filter(CurrentExam=currentexam)
-        serializerForTimeLine = TimeLineSerializer(timelines, many=True)
-        return Response(serializerForTimeLine.data)
-
-
 class StudentDetail(APIView):
     #permission_classes = [IsAuthenticated]
     """
@@ -189,3 +154,37 @@ class ProfessorDetail(APIView):
         professor = self.get_object(pk)
         professor.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+        
+class TimeLineList(APIView):
+    #permission_classes = [IsAdminUser]
+    # List all Students when API requests are sent to API
+    def get(self, request, format=None):
+        timelines = TimeLine.objects.all()
+        serializerForTimeLine = TimeLineSerializer(timelines, many=True)
+        return Response(serializerForTimeLine.data)
+
+    def post(self, request, format=None):
+        serializerForUploadingTimeLine = TimeLineSerializer(data=request.data)
+        if serializerForUploadingTimeLine.is_valid():
+            serializerForUploadingTimeLine.save()
+            return Response(serializerForUploadingTimeLine.data, status=status.HTTP_201_CREATED)
+        return Response(serializerForUploadingTimeLine.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TimeLineListBasedOnStudent(APIView):
+    #permission_classes = [IsAdminUser]
+    # List all Students when API requests are sent to API
+    def get(self, request, id, currentexam, format=None):
+        timelines = TimeLine.objects.filter(
+            CurrentExam=currentexam, student=id)
+        serializerForTimeLine = TimeLineSerializer(timelines, many=True)
+        return Response(serializerForTimeLine.data)
+
+
+class TimeLineListBasedOnCurrentexam(APIView):
+    #permission_classes = [IsAdminUser]
+    # List all Students when API requests are sent to API
+    def get(self, request, currentexam, format=None):
+        timelines = TimeLine.objects.filter(CurrentExam=currentexam)
+        serializerForTimeLine = TimeLineSerializer(timelines, many=True)
+        return Response(serializerForTimeLine.data)

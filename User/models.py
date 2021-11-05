@@ -5,7 +5,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 from django.conf import settings
-from Registeration.models import Student
+from Registeration.models import Professor, Student
 # Create your models here.
 
 class UserAccountManager(BaseUserManager):
@@ -41,6 +41,12 @@ class UserAccountManager(BaseUserManager):
             username=username,
             name = name
         )
+        professor = Professor(
+            professorID = username,
+            name = name
+        )
+        
+        professor.save()
         user.set_password(password)
         user.is_admin        = True
         user.is_staff        = True

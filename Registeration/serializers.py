@@ -17,7 +17,7 @@ class TimeLineSerializer(serializers.ModelSerializer):
 class ProfessorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Professor
-        fields = ['name','professorID','phoneNumber','degree']
+        fields = ['name','professorID']
 
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:
