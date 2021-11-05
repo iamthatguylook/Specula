@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Student, TimeLine
 from .models import Professor
+from .models import Room
 
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -18,3 +19,7 @@ class ProfessorSerializer(serializers.ModelSerializer):
         model = Professor
         fields = ['name','professorID','phoneNumber','degree']
 
+class RoomSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Room
+        fields = ['roomName']

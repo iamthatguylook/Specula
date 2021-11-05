@@ -4,6 +4,10 @@ from . import views
 urlpatterns = [
 
     # API restframework  VIEWS
+    path('api/roomList',
+         views.RoomList.as_view(), name='RoomList'),
+    path('api/roomDetail/<str:pk>/',
+         views.RoomDetail.as_view(), name='RoomDetail'),
     path('api/registerationStudent/ListAllStudents/',
          views.StudentList.as_view(), name='registerationStudent/ListALLStudents/'),
     path('api/registerationStudent/<str:pk>/',

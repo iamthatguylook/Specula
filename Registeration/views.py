@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from .models import Professor
+from .models import Professor, Room
 from .models import Student, TimeLine
-from .serializers import StudentSerializer, TimeLineSerializer
+from .serializers import StudentSerializer, TimeLineSerializer, RoomSerializer
 from .serializers import ProfessorSerializer
 from django.http import Http404
 from rest_framework.views import APIView
@@ -15,6 +15,52 @@ from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 
 # Create your views here.
+
+
+class RoomDetail(APIView):
+    """
+    Retrieve, update or delete a Professor instance.
+    """
+
+    def get_object(self, pk):
+        try:
+            return Room.objects.get(roomName=pk)
+        except Room.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        room = self.get_object(pk)
+        serializer = RoomSerializer(room)
+        return Response(serializer.data)
+
+    
+    def put(self, request, pk, format=None):
+        room = self.get_object(pk)
+        serializer = RoomSerializer(room, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        room = self.get_object(pk)
+        room.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+        
+class RoomList(APIView):
+    #permission_classes = [IsAdminUser]
+    # List all Students when API requests are sent to API
+    def get(self, request, format=None):
+        rooms = Room.objects.all()
+        serializerForRoom = RoomSerializer(rooms, many=True)
+        return Response(serializerForRoom.data)
+
+    def post(self, request, format=None):
+        serializerForUploadingRoom = RoomSerializer(data=request.data)
+        if serializerForUploadingRoom.is_valid():
+            serializerForUploadingRoom.save()
+            return Response(serializerForUploadingRoom.data, status=status.HTTP_201_CREATED)
+        return Response(serializerForUploadingRoom.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class StudentList(APIView):
@@ -53,9 +99,12 @@ class TimeLineListBasedOnStudent(APIView):
     #permission_classes = [IsAdminUser]
     # List all Students when API requests are sent to API
     def get(self, request, id, currentexam, format=None):
-        timelines = TimeLine.objects.filter(CurrentExam=currentexam, student=id)
+        timelines = TimeLine.objects.filter(
+            CurrentExam=currentexam, student=id)
         serializerForTimeLine = TimeLineSerializer(timelines, many=True)
         return Response(serializerForTimeLine.data)
+
+
 class TimeLineListBasedOnCurrentexam(APIView):
     #permission_classes = [IsAdminUser]
     # List all Students when API requests are sent to API
@@ -63,7 +112,8 @@ class TimeLineListBasedOnCurrentexam(APIView):
         timelines = TimeLine.objects.filter(CurrentExam=currentexam)
         serializerForTimeLine = TimeLineSerializer(timelines, many=True)
         return Response(serializerForTimeLine.data)
-  
+
+
 class StudentDetail(APIView):
     #permission_classes = [IsAuthenticated]
     """
