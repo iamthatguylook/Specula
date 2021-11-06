@@ -205,8 +205,7 @@ class TimeLineListBasedOnStudent(APIView):
     #permission_classes = [IsAdminUser]
     # List all Students when API requests are sent to API
     def get(self, request, id, currentexam, format=None):
-        timelines = TimeLine.objects.filter(
-            CurrentExam=currentexam, student=id)
+        timelines = TimeLine.objects.filter(CurrentExam=currentexam, student=id)
         serializerForTimeLine = TimeLineSerializer(timelines, many=True)
         return Response(serializerForTimeLine.data)
 

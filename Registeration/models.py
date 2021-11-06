@@ -22,7 +22,7 @@ class Room(models.Model):
     
 class TimeLine(models.Model):
     student= models.ForeignKey(Student,on_delete=models.CASCADE)
-    AItimeStamp= models.CharField(max_length=6)
+    AItimeStamp= models.CharField(max_length=30)
     AItextMessage = models.CharField(max_length=500)
     AIdangerLevel = models.CharField(max_length=500)
     CurrentExam = models.CharField(max_length=10,null=True)
