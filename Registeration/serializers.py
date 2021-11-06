@@ -6,7 +6,7 @@ from .models import Room
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ['name','studentID','CurrentExam','CurrentAItimeStamp','CurrentAItextMessage','CurrentAIdangerLevel']
+        fields = ['name','studentID','CurrentExam']
 
 class TimeLineSerializer(serializers.ModelSerializer):
     class Meta:

@@ -7,9 +7,7 @@ class Student(models.Model):
     name = models.CharField(max_length=100,null=True)
     studentID = models.CharField(max_length=500,primary_key=True,unique=True)
     CurrentExam = models.CharField(max_length=10,null=True)
-    CurrentAItimeStamp= models.CharField(max_length=6,null=True)
-    CurrentAItextMessage = models.CharField(max_length=500,null=True)
-    CurrentAIdangerLevel = models.CharField(max_length=500,null=True)
+    
 
     #time stamp
     #message text
