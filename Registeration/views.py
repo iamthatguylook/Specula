@@ -21,7 +21,7 @@ class RoomDetail(APIView):
     """
     Retrieve, update or delete a Professor instance.
     """
-
+    permission_classes = [IsAuthenticated]
     def get_object(self, pk):
         try:
             return Room.objects.get(roomName=pk)
@@ -48,7 +48,7 @@ class RoomDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
         
 class RoomList(APIView):
-    #permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminUser]
     # List all Students when API requests are sent to API
     def get(self, request, format=None):
         rooms = Room.objects.all()
@@ -64,7 +64,7 @@ class RoomList(APIView):
 
 
 class StudentList(APIView):
-    #permission_classes = [IsAdminUser]
+    permission_classes = [IsAuthenticated]
     # List all Students when API requests are sent to API
     def get(self, request, format=None):
         students = Student.objects.all()
@@ -84,7 +84,7 @@ class StudentDetail(APIView):
     """
     Retrieve, update or delete a Student instance.
     """
-
+    permission_classes = [IsAdminUser]
     def get_object(self, pk):
         try:
             return Student.objects.get(CurrentExam=pk)
@@ -114,7 +114,7 @@ class StudentDetailOnID(APIView):
     """
     Retrieve, update or delete a Student instance.
     """
-
+    permission_classes = [IsAuthenticated]
     def get_object(self, pk):
         try:
             return Student.objects.get(studentID=pk)
@@ -142,6 +142,7 @@ class StudentDetailOnID(APIView):
 
 class ProfessorList(APIView):
     # List all Students when API requests are sent to API
+    permission_classes = [IsAdminUser]
     def get(self, request, format=None):
         professors = Professor.objects.all()
         serializerForProfessor = ProfessorSerializer(professors, many=True)
@@ -160,7 +161,7 @@ class ProfessorDetail(APIView):
     """
     Retrieve, update or delete a Professor instance.
     """
-
+    permission_classes = [IsAdminUser]
     def get_object(self, pk):
         try:
             return Professor.objects.get(pk=pk)
@@ -202,7 +203,7 @@ class TimeLineList(APIView):
 
 
 class TimeLineListBasedOnStudent(APIView):
-    #permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminUser]
     # List all Students when API requests are sent to API
     def get(self, request, id, currentexam, format=None):
         timelines = TimeLine.objects.filter(CurrentExam=currentexam, student=id)
@@ -211,7 +212,7 @@ class TimeLineListBasedOnStudent(APIView):
 
 
 class TimeLineListBasedOnCurrentexam(APIView):
-    #permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminUser]
     # List all Students when API requests are sent to API
     def get(self, request, currentexam, format=None):
         timelines = TimeLine.objects.filter(CurrentExam=currentexam)
