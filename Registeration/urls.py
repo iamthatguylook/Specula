@@ -15,6 +15,10 @@ urlpatterns = [
          views.StudentList.as_view(), name='registerationStudent/ListALLStudents/'),
     path('api/registerationStudent/<str:pk>/',
          views.StudentDetail.as_view(), name='registerationStudent/int<pk>/'),
+   
+   
+    path('api/ExamStudent/<str:currentexam>/',
+         views.StudentExamList.as_view(), name='ExamStudent'),
     path('api/registerationProfessor/ListAllProfessors/',
          views.ProfessorList.as_view(), name='registerationProfessor/ListALLProfessors/'),
     path('api/registerationProfessor/<int:pk>/',

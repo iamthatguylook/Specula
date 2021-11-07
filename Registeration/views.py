@@ -78,6 +78,14 @@ class StudentList(APIView):
             return Response(serializerForUploadingStudent.data, status=status.HTTP_201_CREATED)
         return Response(serializerForUploadingStudent.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class StudentExamList(APIView):
+    permission_classes = [IsAuthenticated]
+    # List all Students when API requests are sent to API
+    def get(self, request,currentexam,format=None):
+        students = Student.objects.filter(CurrentExam=currentexam)
+        serializerForStudent = StudentSerializer(students, many=True)
+        return Response(serializerForStudent.data)
+
 
 class StudentDetail(APIView):
     #permission_classes = [IsAuthenticated]
@@ -114,7 +122,7 @@ class StudentDetailOnID(APIView):
     """
     Retrieve, update or delete a Student instance.
     """
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
     def get_object(self, pk):
         try:
             return Student.objects.get(studentID=pk)
