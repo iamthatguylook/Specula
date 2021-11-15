@@ -92,7 +92,7 @@ class StudentDetail(APIView):
     """
     Retrieve, update or delete a Student instance.
     """
-    permission_classes = [IsAdminUser]
+    #permission_classes = [IsAdminUser]
     def get_object(self, pk):
         try:
             return Student.objects.get(CurrentExam=pk)
