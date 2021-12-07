@@ -2,11 +2,21 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from User.models import User
-
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
 from rest_framework import serializers
-
+from rest_framework.authtoken.views import ObtainAuthToken
 from User.models import User
 from Registeration.models import Student
+class UserDetailSerializer(serializers.ModelSerializer):
+	
+	class Meta:
+		model = User
+		fields = ['username']
+		
+
+	
+
 
 class CustomUserSerializer(serializers.ModelSerializer):
 
@@ -40,3 +50,4 @@ class CustomUserSerializer(serializers.ModelSerializer):
 		student.save()
 
 		return account
+
