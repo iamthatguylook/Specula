@@ -19,7 +19,7 @@ from rest_framework.response import Response
 
 class RoomDetail(APIView):
     """
-    Retrieve, update or delete a Professor instance.
+    Retrieve, update or delete a Room instance.
     """
     permission_classes = [IsAuthenticated]
     def get_object(self, pk):
@@ -149,8 +149,8 @@ class StudentDetailOnID(APIView):
 
 
 class ProfessorList(APIView):
-    # List all Students when API requests are sent to API
-    permission_classes = [IsAdminUser]
+    # List all professors when API requests are sent to API
+    permission_classes = [IsAdminUser] # Only users that have admin priveldge
     def get(self, request, format=None):
         professors = Professor.objects.all()
         serializerForProfessor = ProfessorSerializer(professors, many=True)
@@ -196,7 +196,7 @@ class ProfessorDetail(APIView):
         
 class TimeLineList(APIView):
     #permission_classes = [IsAdminUser]
-    # List all Students when API requests are sent to API
+    # List all Timeline events when API requests are sent to API
     def get(self, request, format=None):
         timelines = TimeLine.objects.all()
         serializerForTimeLine = TimeLineSerializer(timelines, many=True)
@@ -212,7 +212,7 @@ class TimeLineList(APIView):
 
 class TimeLineListBasedOnStudent(APIView):
     permission_classes = [IsAdminUser]
-    # List all Students when API requests are sent to API
+    # List all TimeLine data corresponding to the right exam and right studentID when API requests are sent to API
     def get(self, request, id, currentexam, format=None):
         timelines = TimeLine.objects.filter(CurrentExam=currentexam, student=id)
         serializerForTimeLine = TimeLineSerializer(timelines, many=True)
@@ -221,7 +221,7 @@ class TimeLineListBasedOnStudent(APIView):
 
 class TimeLineListBasedOnCurrentexam(APIView):
     permission_classes = [IsAdminUser]
-    # List all Students when API requests are sent to API
+    # List all Timeline based on specific exams when API requests are sent to API
     def get(self, request, currentexam, format=None):
         timelines = TimeLine.objects.filter(CurrentExam=currentexam)
         serializerForTimeLine = TimeLineSerializer(timelines, many=True)
